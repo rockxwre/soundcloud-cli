@@ -64,6 +64,10 @@ def upload(filename, sharing='private', downloadable=True, title=None, descripti
         title = os.path.splitext(os.path.basename(filename))[0]
 
     filename = os.path.expanduser(filename)
+    if downloadable:
+	downloadable = 'true'
+    else:
+	downloadable = 'false'
 
     data = {
         'oauth_token': settings.access_token,
