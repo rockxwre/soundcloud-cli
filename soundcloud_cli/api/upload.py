@@ -60,7 +60,7 @@ class Progressbar(object):
         sys.stdout.flush()
 
 
-def upload(filename, sharing='private', downloadable=True, title=None, description=None, genre=None, tag_list=None, artwork=None, pubdate=None, callback=Progressbar):
+def upload(filename, sharing='private', downloadable=True, title=None, description=None, genre=None, tag_list=None, artwork=None, pubdate=None, feedable=False, callback=Progressbar):
     if not title:
         title = os.path.splitext(os.path.basename(filename))[0]
 
@@ -69,6 +69,10 @@ def upload(filename, sharing='private', downloadable=True, title=None, descripti
         downloadable = 'true'
     else:
         downloadable = 'false'
+    if feedable:
+        feedable = 'true'
+    else:
+        feedable = 'false'
 
     data = {
         'oauth_token': settings.access_token,
@@ -76,6 +80,7 @@ def upload(filename, sharing='private', downloadable=True, title=None, descripti
         'track[sharing]': sharing,
         'track[downloadable]': downloadable,
         'track[title]': title,
+        'track[feedable]': feedable,
     }
 
     if description:
