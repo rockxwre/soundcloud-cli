@@ -145,12 +145,6 @@ def command_upload(args):
                                 tag_list=tag_list,
                                 artwork=args.artwork)
 
-    url = res['permalink_url']
-
-    print(url)
-    utils.open_browser(url)
-    utils.copy_to_clipboard(url)
-
     # share if defaults.share_with set or if requested explicitly
     share_with = settings.defaults.get('share_with', None)
 
