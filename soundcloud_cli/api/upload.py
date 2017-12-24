@@ -65,9 +65,9 @@ def upload(filename, sharing='private', downloadable=True, title=None, descripti
 
     filename = os.path.expanduser(filename)
     if downloadable:
-	downloadable = 'true'
+	    downloadable = 'true'
     else:
-	downloadable = 'false'
+	    downloadable = 'false'
 
     data = {
         'oauth_token': settings.access_token,
@@ -88,7 +88,7 @@ def upload(filename, sharing='private', downloadable=True, title=None, descripti
 
     if artwork:
         artwork = os.path.expanduser(artwork)
-        data['track[artwork_data'] = (artwork, open(artwork, 'rb').read())
+        data['track[artwork_data]'] = (artwork, open(artwork, 'rb').read())
 
     (data, content_type) = requests.packages.urllib3.filepost.encode_multipart_formdata(data)
 
