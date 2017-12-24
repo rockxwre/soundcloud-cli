@@ -4,6 +4,7 @@ import os
 import requests
 import sys
 from io import BytesIO
+from datetime import datetime
 
 from .. import settings
 
@@ -59,15 +60,15 @@ class Progressbar(object):
         sys.stdout.flush()
 
 
-def upload(filename, sharing='private', downloadable=True, title=None, description=None, genre=None, tag_list=None, artwork=None, callback=Progressbar):
+def upload(filename, sharing='private', downloadable=True, title=None, description=None, genre=None, tag_list=None, artwork=None, pubdate=None, callback=Progressbar):
     if not title:
         title = os.path.splitext(os.path.basename(filename))[0]
 
     filename = os.path.expanduser(filename)
     if downloadable:
-	    downloadable = 'true'
+        downloadable = 'true'
     else:
-	    downloadable = 'false'
+        downloadable = 'false'
 
     data = {
         'oauth_token': settings.access_token,
@@ -89,6 +90,13 @@ def upload(filename, sharing='private', downloadable=True, title=None, descripti
     if artwork:
         artwork = os.path.expanduser(artwork)
         data['track[artwork_data]'] = (artwork, open(artwork, 'rb').read())
+        
+    if pubdate:
+        puddateObj = datetime.strptime(pubdate, '%Y/%m/%d')
+        data['track[release_year]'] = puddateObj.year
+        data['track[release_month]'] = puddateObj.month
+        data['track[release_day]'] = puddateObj.day
+        
 
     (data, content_type) = requests.packages.urllib3.filepost.encode_multipart_formdata(data)
 

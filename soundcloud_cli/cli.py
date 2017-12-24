@@ -143,7 +143,8 @@ def command_upload(args):
                                 description=args.description,
                                 genre=args.genre,
                                 tag_list=tag_list,
-                                artwork=args.artwork)
+                                artwork=args.artwork,
+                                pubdate=args.pubdate)
 
     # share if defaults.share_with set or if requested explicitly
     share_with = settings.defaults.get('share_with', None)
@@ -200,6 +201,7 @@ def main():
     upload_parser.add_argument('--tags', help='comma separated list of tags')
     upload_parser.add_argument('--share-with', help='comma separated list of users to share with')
     upload_parser.add_argument('--artwork', help='artwork to use for song')
+    upload_parser.add_argument('--pubdate', help='publish date using format yyyy/mm/dd')
     upload_parser.set_defaults(command=command_upload)
 
     # default to upload command
